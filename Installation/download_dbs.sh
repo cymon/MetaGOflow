@@ -57,8 +57,8 @@ export FTP_DBS=ftp://ftp.ebi.ac.uk/pub/databases/metagenomics/pipeline-5.0/ref-d
 # Versions
 IPR=5
 
-# We are now in InterPro 89.0. (Checked on June 2022)
-IPRSCAN=5.57-90.0
+# We are now in InterProScan. (Checked on October 2023)
+IPRSCAN=5.64-96.0
 
 # The integrated version is from Jul 23, 2019
 # We are now in version 2..0.15 (Checked on June 2022)

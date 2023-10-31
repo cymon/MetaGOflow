@@ -15,7 +15,8 @@ singularity pull --force --name microbiomeinformatics_pipeline-v5.biom-convert:v
 singularity pull --force --name hariszaf_pipeline-v5.fraggenescan:v1.31.1.sif docker://hariszaf/pipeline-v5.fraggenescan:v1.31.1
 singularity pull --force --name microbiomeinformatics_pipeline-v5.protein-post-processing:v1.0.1.sif docker://microbiomeinformatics/pipeline-v5.protein-post-processing:v1.0.1
 singularity pull --force --name hariszaf_pipeline-v5.eggnog:v2.1.8.sif docker://hariszaf/pipeline-v5.eggnog:v2.1.8
-singularity pull --force --name hariszaf_pipeline-v5.interproscan:v5.57-90.0.sif docker://hariszaf/pipeline-v5.interproscan:v5.57-90.0
+#singularity pull --force --name hariszaf_pipeline-v5.interproscan:v5.57-90.0.sif docker://hariszaf/pipeline-v5.interproscan:v5.57-90.0
+singularity pull --force --name cymon_interproscan-5.64-96.0:latest.sif docker://docker://cymon/interproscan-5.64-96.0:latest
 singularity pull --force --name microbiomeinformatics_pipeline-v5.hmmer:v3.2.1.sif docker://microbiomeinformatics/pipeline-v5.hmmer:v3.2.1
 singularity pull --force --name quay.io_biocontainers_megahit:1.2.9--h2e03b76_1.sif docker://quay.io/biocontainers/megahit:1.2.9--h2e03b76_1
 singularity pull --force --name microbiomeinformatics_pipeline-v5.motus:v2.5.1.sif docker://microbiomeinformatics/pipeline-v5.motus:v2.5.1
