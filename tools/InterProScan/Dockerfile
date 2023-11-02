@@ -7,7 +7,7 @@ LABEL Version="metaGOflow version"
 
 ARG IPR=5
 ENV IPR $IPR
-ARG IPRSCAN=5.57-90.0
+ARG IPRSCAN=5.64-96.0
 ENV IPRSCAN $IPRSCAN
 
 RUN mkdir -p /opt
@@ -33,7 +33,7 @@ FROM busybox AS buildbin
 
 ARG IPR=5
 ENV IPR $IPR
-ARG IPRSCAN=5.57-90.0
+ARG IPRSCAN=5.64-96.0
 ENV IPRSCAN $IPRSCAN
 
 RUN mkdir -p /opt
@@ -71,10 +71,6 @@ COPY --from=buildbin /opt/interproscan/bin /opt/interproscan/bin
 
 ENV PATH="/opt/interproscan/:/opt/interproscan/bin:${PATH}"
 
-RUN sed -i 's/http:\/\/www\.ebi\.ac\.uk\/interpro\/match-lookup//' /opt/interproscan/interproscan.properties
-
-RUN apt-get install -y java-11
-
 # Install the python script required for "add-apt-repository"
 RUN apt-get update \
     && apt-get install -y \
@@ -99,11 +95,7 @@ ENV PATH $PATH:$JAVA_HOME/bin
 ENV CLASSPATH $JAVA_HOME/lib/tools.jar
 ENV MANPATH $JAVA_HOME/man
 
-RUN echo "localhost" > /etc/hostname && echo "127.0.0.1\tlocalhost" > /etc/hosts 
-
 WORKDIR /opt/interproscan
-
-RUN rm -r data/
 
 RUN apt-get install -y libpcre3-dev
 
