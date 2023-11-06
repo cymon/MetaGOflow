@@ -29,7 +29,7 @@ inputs:
     type: File
     format: edam:format_1929
     inputBinding:
-      position: 8
+      position: 6
       prefix: '--input'
     label: Input file path
     doc: >-
@@ -39,7 +39,7 @@ inputs:
   applications:
     type: string[]?
     inputBinding:
-      position: 9
+      position: 7
       itemSeparator: ','
       prefix: '--applications'
     label: Analysis
@@ -54,7 +54,7 @@ inputs:
     type: int
     default: 8
     inputBinding:
-      position: 2
+      position: 8
       prefix: '--cpu'
     label: Number of CPUs
     doc: >-
@@ -64,7 +64,7 @@ inputs:
   disableResidueAnnotation:
     type: boolean?
     inputBinding:
-      position: 11
+      position: 9
       prefix: '--disable-residue-annot'
     label: Disables residue annotation
     doc: 'Optional, excludes sites from the XML, JSON output.'
@@ -80,10 +80,10 @@ arguments:
   - position: 3
     prefix: '--tempdir'
     valueFrom: $(runtime.tmpdir)
-  - position: 7
+  - position: 4
     valueFrom: 'TSV'
     prefix: '-f'
-  - position: 8
+  - position: 5
     valueFrom: $(runtime.outdir)/$(inputs.inputFile.nameroot).IPS.tsv
     prefix: '-o'
 
