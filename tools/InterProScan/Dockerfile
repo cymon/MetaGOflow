@@ -7,7 +7,7 @@ LABEL Version="metaGOflow version"
 
 ARG IPR=5
 ENV IPR $IPR
-ARG IPRSCAN=5.64-96.0
+ARG IPRSCAN=5.57-90.0
 ENV IPRSCAN $IPRSCAN
 
 RUN mkdir -p /opt
@@ -33,7 +33,7 @@ FROM busybox AS buildbin
 
 ARG IPR=5
 ENV IPR $IPR
-ARG IPRSCAN=5.64-96.0
+ARG IPRSCAN=5.57-90.0
 ENV IPRSCAN $IPRSCAN
 
 RUN mkdir -p /opt
