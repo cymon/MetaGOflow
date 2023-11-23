@@ -45,7 +45,11 @@ steps:
       inputFile: split_seqs/chunks
       outputFormat: InterProScan_outputFormat
       databases: InterProScan_databases
-      cpu: interproscan_threads
+      source: split_seqs/chunks
+      threads: threads
+      cpu: 
+        valueFrom: $(Math.floor(inputs.threads / inputs.source.length))
+      #cpu: interproscan_threads
     out: [ i5Annotations ]
     run: ../../tools/InterProScan/InterProScan-v5.cwl
     label: "InterProScan: protein sequence classifier"
