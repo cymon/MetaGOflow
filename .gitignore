@@ -128,4 +128,5 @@ marine_sediment_dbh/
 
 slurm_run.sh
 
-
+#Cymon
+*.swp
