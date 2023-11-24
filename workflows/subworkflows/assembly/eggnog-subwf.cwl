@@ -26,15 +26,19 @@ outputs:
 
 steps:
   eggnog_homology_searches:
-    scatter: fasta_file
+    scatter: inputFiles
     run: ../../../tools/Assembly/EggNOG/eggnog.cwl
     in:
-      fasta_file: fasta_file
+      inputFiles: fasta_file
       db_diamond: db_diamond
       data_dir: data_dir
       no_annot: {default: true}
       no_file_comments: {default: true}
-      cpu: cpu
+      total_cpus: cpu
+      cpu:
+        #can't use inputFiles here: has to be workflow:inputs fasta_file array 
+        source: fasta_file
+        valueFrom: $(Math.floor(inputs.total_cpus / self.length))
       output: file_acc
       mode: { default: diamond }
     out: [ output_orthologs ]
