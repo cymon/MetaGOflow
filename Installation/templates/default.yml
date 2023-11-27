@@ -188,7 +188,8 @@ ko_file:
 
 InterProScan_applications: 
 - Pfam
-- TIGRFAM
+# TIGRFAM now NCBIfam
+- NCBIfam
 - PrositePatterns
 - ProSiteProfiles
 # - Hamap
