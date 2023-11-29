@@ -26,6 +26,7 @@ inputs:
     format: edam:format_1929  # FASTA
     type: File?
     inputBinding:
+      position: 1
       separate: true
       prefix: -i
     label: Input FASTA file containing query sequences
@@ -33,61 +34,80 @@ inputs:
   db:
     type: [string?, File?]  # data/eggnog.db
     inputBinding:
+      position: 2
       prefix: --database
     label: specify the target database for sequence searches (euk,bact,arch, host:port, local hmmpressed database)
 
   db_diamond:
     type: [string?, File?]  # data/eggnog_proteins.dmnd
     inputBinding:
+      position: 3
       prefix: --dmnd_db
     label: Path to DIAMOND-compatible database
 
   data_dir:
     type: [string?, Directory?]  # data/
     inputBinding:
+      position: 4
       prefix: --data_dir
     label: Directory to use for DATA_PATH
 
   mode:
     type: string?
     inputBinding:
+      position: 5
       prefix: -m
     label: hmmer or diamond
 
   no_annot:
     type: boolean?
     inputBinding:
+      position: 6
       prefix: --no_annot
     label: Skip functional annotation, reporting only hits
 
   no_file_comments:
     type: boolean?
     inputBinding:
+      position: 7
       prefix: --no_file_comments
     label: No header lines nor stats are included in the output files
 
   cpu:
     type: int?
     inputBinding:
+      position: 8
       prefix: --cpu
     default: 8
 
   annotate_hits_table:
     type: File?
     inputBinding:
+      position: 9
       prefix: --annotate_hits_table
     label: Annotatate TSV formatted table of query->hits
 
   dbmem:
     type: boolean?
     inputBinding:
+      position: 10
       prefix: --dbmem
     label: Store the whole eggNOG sqlite DB into memory before retrieving the annotations. This requires ~44 GB of RAM memory available.
 
   output:
     type: string?
     inputBinding:
+      position: 11
       prefix: -o
+
+#Quieten the output:
+arguments:
+  - valueFrom: '> /dev/null'
+    shellQuote: false
+    position: 12
+  - valueFrom: '2> /dev/null'
+    shellQuote: false
+    position: 13
 
 outputs:
 
