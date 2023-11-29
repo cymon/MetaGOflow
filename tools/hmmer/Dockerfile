@@ -8,7 +8,8 @@ LABEL maintainer="Ekaterina Sakharova <kates@ebi.ac.uk>"
 # Software Version:     3.2.1
 # Description:          protein sequence classifier
 ##############################################################
-ENV VERSION=3.2.1
+#ENV VERSION=3.2.1
+ENV VERSION=3.4
 
 RUN apk add --no-cache wget build-base
 
