@@ -5,11 +5,11 @@ cgc_step: true
 reads_functional_annotation: true
 assemble: true
 
-# Global
+### CPUS
+### NB: any "threads modulus threads_per_chunk" will not be used
+### so make sure threads is exactly divisable by threads_per_chunk
 threads: 40
-
-# As a rule of thumb keep that as floor(threads/8) where threads the previous parameter
-interproscan_threads: 5
+threads_per_chunk: 4
 
 # fastp parameters
 detect_adapter_for_pe: false
@@ -26,18 +26,13 @@ correction: false
 
 # Assembly
 memory: 0.9
-min-contig-len: 500
+min-contig-len: 200 #MetaGoflow default in v1.0
 
 # Combined Gene Caller // the size is in MB
 cgc_chunk_size: 200
 
 # # Taxonomic inference using Diamond and the contigs
 # diamond_maxTargetSeqs: 1
-
-# Functional annotation
-protein_chunk_size_IPS: 1000000 # 20000000
-protein_chunk_size_eggnog: 4000000
-protein_chunk_size_hmm: 4000000
 
 # -----------------
 # Run wf partially

@@ -15,8 +15,6 @@ inputs:
   rna_prediction_ncRNA: File
 
   cgc_results_faa: File
-  protein_chunk_size_hmm: int
-  protein_chunk_size_IPS: int
 
   func_ann_names_ips: string
   InterProScan_databases: [string, Directory]
@@ -38,10 +36,8 @@ inputs:
   go_config: [string, File]
   ko_file: [string, File]
 
-  protein_chunk_size_eggnog: int
-
   threads: int
-  interproscan_threads: int
+  chunk_size: int
 
 outputs:
   functional_annotation_folder:
@@ -53,14 +49,12 @@ outputs:
 
 steps:
 
-  # Performs: 1. eggNOG, 2. hmmscan, 3. IPS 
+  # Performs: 1. eggNOG, 2. IPS, 3. hmmsearch
   functional_annotation:
     run: ../subworkflows/functional-annotation/functional-annotation.cwl
     in:
       type: { default: "raw-reads"}
       CGC_predicted_proteins: cgc_results_faa
-      chunk_size_hmm: protein_chunk_size_hmm
-      chunk_size_IPS: protein_chunk_size_IPS
       name_ips: func_ann_names_ips
       name_hmmer: func_ann_names_hmmer
       HMM_gathering_bit_score: HMM_gathering_bit_score
@@ -70,12 +64,11 @@ steps:
       InterProScan_databases: InterProScan_databases
       InterProScan_applications: InterProScan_applications
       InterProScan_outputFormat: InterProScan_outputFormat
-      chunk_size_eggnog: protein_chunk_size_eggnog
       EggNOG_diamond_db: EggNOG_diamond_db
       EggNOG_data_dir: EggNOG_data_dir
       EggNOG_db: EggNOG_db
       threads: threads
-      interproscan_threads: interproscan_threads
+      chunk_size: chunk_size
     out: [ hmm_result, ips_result, eggnog_annotations ]  
 
   # GO SUMMARY; PFAM; summaries and stats IPS, HMMScan, Pfam; add header; chunking TSV

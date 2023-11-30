@@ -22,7 +22,7 @@ requirements:
 baseCommand: [emapper.py]
 
 inputs:
-  fasta_file:
+  inputFile:
     format: edam:format_1929  # FASTA
     type: File?
     inputBinding:

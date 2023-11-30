@@ -30,23 +30,38 @@ requirements:
 
 hints:
   DockerRequirement:
-    dockerPull: microbiomeinformatics/pipeline-v5.hmmer:v3.2.1
+    #dockerPull: microbiomeinformatics/pipeline-v5.hmmer:v3.2.1
+    dockerPull: cymon/hmmer-3.4:0.1
 
 baseCommand: ["hmmsearch"]
 
 inputs:
 
+  inputFile:
+    format: edam:format_1929  # FASTA chunk
+    type: File
+    inputBinding:
+      position: 7
+      separate: true
+
+  cpu:
+    type: int?
+    inputBinding:
+      position: 1
+      prefix: --cpu
+    default: 4
+
   omit_alignment:
     type: boolean?
     inputBinding:
-      position: 1
-      prefix: "--noali"
+      position: 3
+      prefix: --noali
 
   gathering_bit_score:
     type: boolean?
     inputBinding:
-      position: 4
-      prefix: "--cut_ga"
+      position: 5
+      prefix: --cut_ga
 
   database:
     type: string
@@ -58,13 +73,6 @@ inputs:
     doc: |
       "Database path"
 
-  seqfile:
-    format: edam:format_1929  # FASTA
-    type: File
-    inputBinding:
-      position: 6
-      separate: true
-
 arguments:
   - valueFrom: |
       ${
@@ -75,22 +83,21 @@ arguments:
           return inputs.database;
         }
       }
-    position: 5
+    position: 6
   - prefix: --domtblout
     valueFrom: $(inputs.seqfile.nameroot)_hmmsearch.tbl
-    position: 2
-  - prefix: --cpu
-    valueFrom: '4'
+    position: 4
   # hmmer is too verbose
   # discard all the std output and error
   - prefix: -o
     valueFrom: '/dev/null'
+    position: 2
   - valueFrom: '> /dev/null'
     shellQuote: false
-    position: 10
+    position: 8
   - valueFrom: '2> /dev/null'
     shellQuote: false
-    position: 11
+    position: 9
 
 outputs:
   output_table:

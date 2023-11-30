@@ -23,11 +23,13 @@ inputs:
   forward_reads: 
     type: File?
     doc: |
-        User's forward reads input file 
+        User's forward reads input file
+
   reverse_reads:
     type: File?
     doc: |
-        User's reverse reads input file 
+        User's reverse reads input file
+
   both_reads: 
     type: string[]?
     doc: |
@@ -35,19 +37,22 @@ inputs:
 
   threads: 
     type: int
-    default: 5
+    default: 10
     doc: | 
-        Number of threads to be used from each tool. User may set this to as many as the system can provide for faster performance.
+        Total number of cpus/threads available to the workflow. User may set this to as many as the system can provide for faster performance
 
-  # Interproscan
-  interproscan_threads: {type: int, default: 8}
+  threads_per_chunk:
+    type: int
+    default: 2
+    doc: |
+        The total number of cpus modulus cpus_per_chunk determines the numbers of chunks in the scatter steps
 
   # Steps
   qc_and_merge_step: 
     type: boolean
     default: true 
     doc: | 
-        metaGOflow will perform the sequence pre-processing step. 
+        metaGOflow will perform the sequence pre-processing step 
 
   taxonomic_inventory: 
     type: boolean
@@ -107,18 +112,18 @@ inputs:
   qualified_phred_quality: 
     type: int?
     doc: | 
-        fast parameter setting the quality value that a base is qualified. Default 15 means phred quality >=Q15 is qualified.
+        fast parameter setting the quality value that a base is qualified. Default 15 means phred quality >=Q15 is qualified
 
   unqualified_percent_limit: 
     type: int?
     doc: |
-        fastp parameter setting the percentage of bases allowed to be unqualified (0~100). Default 40 means 40%.
+        fastp parameter setting the percentage of bases allowed to be unqualified (0~100). Default 40 means 40%
 
   min_length_required:
     type: int
     default: 100 
     doc: |
-        fastp parameter setting a theshold where reads shorter than that will be discarded. In metaGOflow, default is 100.
+        fastp parameter setting a theshold where reads shorter than that will be discarded. In metaGOflow, default is 100
 
   cut_right: 
     type: boolean
@@ -148,23 +153,7 @@ inputs:
     type: int
     default: 50
     doc: | 
-        Size of chunks to split reads into for the gene caller step.
-
-  ## Functional annotation input vars
-  protein_chunk_size_hmm: 
-    type: int?
-    doc: |
-      Size of chunks to split reads into for the search step of the HMMER software. 
-
-  protein_chunk_size_IPS: 
-    type: int?
-    doc: |
-        Size of chunks to split reads into for the InterProScan step.
-
-  protein_chunk_size_eggnog: 
-    type: int?
-    doc: |
-      Size of chunks to split reads into for the eggNOG annotation step.
+        Size of chunks to split reads into for the gene caller step
 
   # Variables to be used for partial run of the wf
   processed_reads:
@@ -177,7 +166,7 @@ inputs:
     type: File?
     default: pseudo_files/pseudo.merged.unfiltered.fasta
     doc: |
-        Path to the merged file with the unfiltered sequences as derived from the sequsence pre-processing step. Mandatory for running the taxonomy inventory step.
+        Path to the merged file with the unfiltered sequences as derived from the sequsence pre-processing step. Mandatory for running the taxonomy inventory step
 
   maskfile: 
     type: File?
@@ -196,14 +185,14 @@ inputs:
       - class: File
         path: pseudo_files/pseudo_2_clean.fastq.trimmed.fasta
     doc: |
-        Path to forward and reverse processed read files. Mandatory for running the assembly step .
+        Path to forward and reverse processed read files. Mandatory for running the assembly step 
 
   predicted_faa_from_previous_run: 
     type: File?
     format: edam:format_1929
     default: pseudo_files/pseudo.merged_CDS.faa
     doc: |
-      Path to coding sequences as derived from the gene caller step. Mandatory for the functional annotation step.
+      Path to coding sequences as derived from the gene caller step. Mandatory for the functional annotation step
 
   count_faa_from_previous_run: 
     type: int?
@@ -400,8 +389,8 @@ steps:
       postfixes: CGC_postfixes
       chunk_size: cgc_chunk_size
 
-
     out: [ predicted_faa, predicted_ffn, count_faa ]
+
   # FUNCTIONAL ANNOTATION ON THE RAW READS
   functional_annotation_on_reads:
     doc: 
@@ -441,10 +430,11 @@ steps:
           - predicted_faa_from_previous_run
         pickValue: first_non_null
 
-       # Parameters' values 
-       protein_chunk_size_hmm: protein_chunk_size_hmm
-       protein_chunk_size_IPS: protein_chunk_size_IPS
-       protein_chunk_size_eggnog: protein_chunk_size_eggnog
+       chunk_size:
+         source: cgc_on_reads/count_faa
+         # TODO
+         # This is buggy if number of proteins is less than Math.floor(inputs.threads/inputs.threads_per_chunk) * 1M
+         valueFrom: $(Math.round((self.count_faa/Math.floor(inputs.threads/inputs.threads_per_chunk))/1000000)*1000000)
 
        func_ann_names_ips: func_ann_names_ips
        InterProScan_databases: InterProScan_databases
@@ -466,8 +456,6 @@ steps:
        go_config: go_config
        ko_file: ko_file
        threads: threads
-
-       interproscan_threads: interproscan_threads
 
     out:
       - functional_annotation_folder

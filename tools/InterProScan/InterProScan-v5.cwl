@@ -9,7 +9,8 @@ requirements:
   - class: InlineJavascriptRequirement
   - class: ScatterFeatureRequirement
   - class: DockerRequirement
-    dockerPull: hariszaf/pipeline-v5.interproscan:v5.57-90.0
+    #dockerPull: hariszaf/pipeline-v5.interproscan:v5.57-90.0
+    dockerPull: cymon/interproscan-5.64-96.0-cluster:0.5
   - class: InitialWorkDirRequirement
     listing:
       - entry: $(inputs.databases)
@@ -25,11 +26,22 @@ baseCommand: [ interproscan.sh ]
 
 inputs:
 
+  threads:
+    type: int
+    default: 8
+    inputBinding:
+      position: 1
+      prefix: '--cpu'
+    label: Number of CPUs
+    doc: >-
+      Optional, number of CPUs to use. If not set, the number of CPUs available
+      on the machine will be used.
+
   inputFile:
     type: File
     format: edam:format_1929
     inputBinding:
-      position: 6
+      position: 8
       prefix: '--input'
     label: Input file path
     doc: >-
@@ -39,7 +51,7 @@ inputs:
   applications:
     type: string[]?
     inputBinding:
-      position: 7
+      position: 9
       itemSeparator: ','
       prefix: '--applications'
     label: Analysis
@@ -50,40 +62,29 @@ inputs:
   databases:
     type: [string?, Directory]
 
-  cpu:
-    type: int
-    default: 8
-    inputBinding:
-      position: 8
-      prefix: '--cpu'
-    label: Number of CPUs
-    doc: >-
-      Optional, number of CPUs to use. If not set, the number of CPUs available
-      on the machine will be used.
-
   disableResidueAnnotation:
     type: boolean?
     inputBinding:
-      position: 9
+      position: 10
       prefix: '--disable-residue-annot'
     label: Disables residue annotation
     doc: 'Optional, excludes sites from the XML, JSON output.'
 
 
 arguments:
-  - position: 0
-    valueFrom: '--disable-precalc'
-  - position: 1
-    valueFrom: '--goterms'
   - position: 2
-    valueFrom: '--pathways'
+    valueFrom: '--disable-precalc'
   - position: 3
+    valueFrom: '--goterms'
+  - position: 4
+    valueFrom: '--pathways'
+  - position: 5
     prefix: '--tempdir'
     valueFrom: $(runtime.tmpdir)
-  - position: 4
+  - position: 6
     valueFrom: 'TSV'
     prefix: '-f'
-  - position: 5
+  - position: 7
     valueFrom: $(runtime.outdir)/$(inputs.inputFile.nameroot).IPS.tsv
     prefix: '-o'
 
@@ -98,10 +99,7 @@ doc: >-
   InterProScan is the software package that allows sequences (protein and
   nucleic) to be scanned against InterPro's signatures. Signatures are
   predictive models, provided by several different databases, that make up the
-  InterPro consortium.
-  This tool description is using a Docker container tagged as version
-  v5.30-69.0.
-  Documentation on how to run InterProScan 5 can be found here:
+  InterPro consortium. Documentation on how to run InterProScan 5 can be found here:
   https://github.com/ebi-pf-team/interproscan/wiki/HowToRun
 
 $namespaces:

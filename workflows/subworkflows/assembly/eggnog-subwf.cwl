@@ -9,11 +9,11 @@ requirements:
   StepInputExpressionRequirement: {}
 
 inputs:
-  fasta_file: File[]
+  fasta_chunks: File[]
   db_diamond: [string?, File?]
   db: [string?, File?]
   data_dir: [string?, Directory?]
-  cpu: int
+  threads: int
   file_acc: string
 
 outputs:
@@ -26,19 +26,17 @@ outputs:
 
 steps:
   eggnog_homology_searches:
-    scatter: inputFiles
+    scatter: inputFile
     run: ../../../tools/Assembly/EggNOG/eggnog.cwl
     in:
-      inputFiles: fasta_file
+      inputFile: fasta_chunks
       db_diamond: db_diamond
       data_dir: data_dir
       no_annot: {default: true}
       no_file_comments: {default: true}
-      total_cpus: cpu
       cpu:
-        #can't use inputFiles here: has to be workflow:inputs fasta_file array 
-        source: fasta_file
-        valueFrom: $(Math.floor(inputs.total_cpus / self.length))
+        source: fasta_chunks
+        valueFrom: $(Math.floor(inputs.threads/self.length))
       output: file_acc
       mode: { default: diamond }
     out: [ output_orthologs ]
@@ -62,7 +60,7 @@ steps:
       mode: { default: no_search }
       dbmem: {default: True}
       no_file_comments: {default: true}
-      cpu: cpu
+      cpu: threads
       output:
         source: file_acc
         valueFrom: $(self.split('_CDS')[0])

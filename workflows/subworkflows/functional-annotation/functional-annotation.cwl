@@ -17,24 +17,22 @@ inputs:
   CGC_predicted_proteins: File
 
   name_hmmer: string
-  chunk_size_hmm: int
   HMM_gathering_bit_score: boolean
   HMM_omit_alignment: boolean
   HMM_database: string
   HMM_database_dir: [string, Directory?]
 
-  chunk_size_IPS: int
   name_ips: string
   InterProScan_databases: [string, Directory]
   InterProScan_applications: string[]  
   InterProScan_outputFormat: string[]  
 
-  chunk_size_eggnog: int
   EggNOG_db: [string?, File?]
   EggNOG_diamond_db: [string?, File?]
   EggNOG_data_dir: [string?, Directory?]
+  
   threads: int
-  interproscan_threads: int
+  chunk_size: int
 
 outputs:
   hmm_result:
@@ -55,7 +53,7 @@ steps:
   split_seqs:
     in:
       seqs: CGC_predicted_proteins
-      chunk_size: chunk_size_eggnog
+      chunk_size: chunk_size
     out: [ chunks ]
     run: ../../../tools/chunks/protein_chunker.cwl
 
@@ -63,42 +61,42 @@ steps:
   eggnog:
     run: ../assembly/eggnog-subwf.cwl
     in:
-      fasta_file: split_seqs/chunks
+      fasta_chunks: split_seqs/chunks
       db_diamond: EggNOG_diamond_db
       db: EggNOG_db
       data_dir: EggNOG_data_dir
-      cpu: threads
+      threads: threads
       file_acc:
         source: CGC_predicted_proteins
         valueFrom: $(self.nameroot)
     out: [ annotations, orthologs ]
 
   run_IPS:
-    run: ../chunking-subwf-IPS.cwl
+    run: ../IPS-subwf.cwl
     in:
-      CGC_predicted_proteins: CGC_predicted_proteins
+      fasta_chunks: split_seqs/chunks
       threads: threads
-      chunk_size: chunk_size_IPS
-
       name_ips: name_ips
       InterProScan_databases: InterProScan_databases
       InterProScan_applications: InterProScan_applications
       InterProScan_outputFormat: InterProScan_outputFormat
-      interproscan_threads: interproscan_threads
       #This is just a flag to delay execution of step until eggnog finishes
       previous_step_result: eggnog/annotations
     out: [ ips_result ]
 
   run_hmmer:
-    run: ../hmmer/chunking-subwf-hmmsearch.cwl
+    run: ../hmmer/hmmsearch-subwf.cwl
     in:
-      CGC_predicted_proteins: CGC_predicted_proteins
-      chunk_size: chunk_size_hmm
+      fasta_chunks: split_seqs/chunks
+      threads: threads
       name_hmmer: name_hmmer
       HMM_gathering_bit_score: HMM_gathering_bit_score
       HMM_omit_alignment: HMM_omit_alignment
       HMM_database: HMM_database
       HMM_database_dir: HMM_database_dir
+      file_acc: 
+        source: CGC_predicted_proteins
+        valueFrom: $(self.nameroot)
       #This is just a flag to delay execution until IPS finishes
       previous_step_result: run_IPS/ips_result
     out: [ hmm_result ]
