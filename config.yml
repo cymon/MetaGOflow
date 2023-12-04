@@ -14,7 +14,7 @@ interproscan_threads: 5
 # fastp parameters
 detect_adapter_for_pe: false
 overrepresentation_analysis: false
-min_length_required: 108
+min_length_required: 140
 force_polyg_tail_trimming: 
 base_correction: false
 qualified_phred_quality: 
@@ -35,7 +35,7 @@ cgc_chunk_size: 200
 # diamond_maxTargetSeqs: 1
 
 # Functional annotation
-protein_chunk_size_IPS: 2000000 # 20000000
+protein_chunk_size_IPS: 4000000 # 20000000
 protein_chunk_size_eggnog: 4000000
 protein_chunk_size_hmm: 4000000
 
