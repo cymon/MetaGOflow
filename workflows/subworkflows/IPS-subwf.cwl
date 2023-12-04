@@ -18,6 +18,7 @@ inputs:
   InterProScan_databases: [string, Directory]
   InterProScan_applications: string[]
   InterProScan_outputFormat: string[]
+  file_acc: string
   previous_step_result: File?
 
 outputs:
@@ -45,8 +46,8 @@ steps:
     in:
       files: interproscan/i5Annotations
       outputFileName:
-        source: CGC_predicted_proteins
-        valueFrom: $(self.nameroot.split('_IPS')[0])
+        source: file_acc
+        valueFrom: $(self.split('_CDS')[0])
       postfix: name_ips
     out: [ result ]
     run: ../../utils/concatenate.cwl

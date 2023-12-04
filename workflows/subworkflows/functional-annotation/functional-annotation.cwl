@@ -80,6 +80,9 @@ steps:
       InterProScan_databases: InterProScan_databases
       InterProScan_applications: InterProScan_applications
       InterProScan_outputFormat: InterProScan_outputFormat
+      file_acc:
+        source: CGC_predicted_proteins
+        valueFrom: $(self.nameroot)
       #This is just a flag to delay execution of step until eggnog finishes
       previous_step_result: eggnog/annotations
     out: [ ips_result ]
