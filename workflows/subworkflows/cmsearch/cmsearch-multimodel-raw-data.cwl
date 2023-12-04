@@ -52,6 +52,7 @@ steps:
     in:
       query_sequences: split_fasta/chunks
       covariance_model_database: cat_models/result
+      #TODO calculate correct numbers of cpus/scatter
       cpu: threads
       omit_alignment_section: { default: true }
       only_hmm: { default: true }
