@@ -13,7 +13,7 @@ requirements:
 
 inputs:
   fasta_chunks: File[]
-  threads: threads
+  threads: int
   name_hmmer: string
   HMM_gathering_bit_score: boolean
   HMM_omit_alignment: boolean
