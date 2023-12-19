@@ -61,7 +61,7 @@ processed_reads: {
   class: File, 
   format: "edam:format_1929",
   #path:  workflows/pseudo_files/pseudo.merged.fasta
-  path:  /usr/local/scratch/metaGOflow-v1.0.0/HMNJKDSX3.UDI260-test/results/DBH.merged.fasta
+  path:  /usr/local/scratch/MetaGOflow-cymon.git/HMNJKDSX3.UDI260-test/results/DBH.merged.fasta
 }
 
 # Mandatory for running the taxonomy inventory step
@@ -76,7 +76,7 @@ input_for_motus: {
 maskfile: {
   class: File, 
   #path:  workflows/pseudo_files/pseudo.merged.cmsearch.all.tblout.deoverlapped
-  path:  /usr/local/scratch/metaGOflow-v1.0.0/HMNJKDSX3.UDI260-test/results/DBH.merged.cmsearch.all.tblout.deoverlapped
+  path:  /usr/local/scratch/MetaGOflow-cymon.git/HMNJKDSX3.UDI260-test/results/DBH.merged.cmsearch.all.tblout.deoverlapped
 }
 
 # Mandatory for the functional annotation step 
@@ -90,7 +90,7 @@ predicted_faa_from_previous_run: {
   class: File, 
   format: "edam:format_1929",
   #path:  workflows/pseudo_files/pseudo.merged_CDS.faa
-  path:  /usr/local/scratch/metaGOflow-v1.0.0/HMNJKDSX3.UDI260-test/results/DBH.merged_CDS.faa
+  path:  /usr/local/scratch/MetaGOflow-cymon.git/HMNJKDSX3.UDI260-test/results/DBH.merged_CDS.faa
 }
 
 # Mandatory for running the assembly step 
