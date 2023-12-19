@@ -79,14 +79,11 @@ steps:
       CGC_predicted_proteins: CGC_predicted_proteins
       threads: threads
       chunk_size: chunk_size_IPS
-
       name_ips: name_ips
       InterProScan_databases: InterProScan_databases
       InterProScan_applications: InterProScan_applications
       InterProScan_outputFormat: InterProScan_outputFormat
       interproscan_threads: interproscan_threads
-      #This is just a flag to delay execution of step until eggnog finishes
-      previous_step_result: eggnog/annotations
     out: [ ips_result ]
 
   run_hmmer:
@@ -99,7 +96,6 @@ steps:
       HMM_omit_alignment: HMM_omit_alignment
       HMM_database: HMM_database
       HMM_database_dir: HMM_database_dir
-      #This is just a flag to delay execution until IPS finishes
       previous_step_result: run_IPS/ips_result
     out: [ hmm_result ]
 
