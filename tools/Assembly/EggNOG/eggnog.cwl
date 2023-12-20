@@ -10,7 +10,7 @@ doc: |
 
 hints:
   DockerRequirement:
-    dockerPull: cymon/eggnog-2.1.12:0.2
+    dockerPull: cymon/eggnog-2.1.12:0.1
     # dockerPull: hariszaf/pipeline-v5.eggnog:v2.1.8
     # dockerPull: microbiomeinformatics/pipeline-v5.eggnog:v2.0.0
 
