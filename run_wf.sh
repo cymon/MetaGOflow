@@ -153,7 +153,7 @@ then
   ena_api_password: ${ENA_PASSWORD}
   " > get_raw_data_run-test.yml
 
-  cwl-runner ${SINGULARITY} --outdir ${OUT_DIR} --debug get_raw_data_run.cwl get_raw_data_run-test.yml
+  cwl-tool ${SINGULARITY} --outdir ${OUT_DIR} --debug get_raw_data_run.cwl get_raw_data_run-test.yml
  
   rm get_raw_data_run.cwl
   rm get_raw_data_run-test.yml
@@ -191,7 +191,7 @@ cp config.yml ${RUN_DIR}/
 
 # Run the metaGOflow workflow using cwl-runner (could use instead cwltool)  
 echo "metaGOflow is ready to go!"
-cwl-runner --parallel ${SINGULARITY} --outdir ${OUT_DIR_FINAL} ${CWL} ${EXTENDED_CONFIG_YAML}
+cwltool --parallel ${SINGULARITY} --outdir ${OUT_DIR_FINAL} ${CWL} ${EXTENDED_CONFIG_YAML}
 
 
 # -----------------------  edit output structure   --------------------------- #
@@ -232,34 +232,34 @@ cd ${CWD}
 
 
 # -----------------------  build RO-crate   --------------------------- #
-
-if [ -z "$ENA_RUN_ID" ]; then
-  ENA_RUN_ID="None"
-else
-  rm -r ${OUT_DIR}/raw_data_from_ENA
-fi
-
-# Init the RO-Crate
-rocrate init -c ${RUN_DIR}
-
-# Edit the RO-Crate
-if [[ $KEEP_TMP != "" ]];
-then 
-  export KEEP_TMP="True"
-else
-  export KEEP_TMP="False"
-fi
-
-python utils/edit-ro-crate.py ${OUT_DIR} ${EXTENDED_CONFIG_YAML} ${ENA_RUN_ID} ${METAGOFLOW_VERSION} ${KEEP_TMP}
-
-
-# Bring back temporary folder if kept.
-if [[ $KEEP_TMP == "True" ]];
-then 
-  echo "Keep temporary output directory."
-  mv ${CWD}/tmp ${TMPDIR}
-fi
-
+#
+#if [ -z "$ENA_RUN_ID" ]; then
+#  ENA_RUN_ID="None"
+#else
+#  rm -r ${OUT_DIR}/raw_data_from_ENA
+#fi
+#
+## Init the RO-Crate
+#rocrate init -c ${RUN_DIR}
+#
+## Edit the RO-Crate
+#if [[ $KEEP_TMP != "" ]];
+#then 
+#  export KEEP_TMP="True"
+#else
+#  export KEEP_TMP="False"
+#fi
+#
+#python utils/edit-ro-crate.py ${OUT_DIR} ${EXTENDED_CONFIG_YAML} ${ENA_RUN_ID} ${METAGOFLOW_VERSION} ${KEEP_TMP}
+#
+#
+## Bring back temporary folder if kept.
+#if [[ $KEEP_TMP == "True" ]];
+#then 
+#  echo "Keep temporary output directory."
+#  mv ${CWD}/tmp ${TMPDIR}
+#fi
+#
 echo "metaGOflow has been completed."
 
 
