@@ -1,15 +1,15 @@
 # Steps to go for
-qc_and_merge_step: false
-taxonomic_inventory: false
-cgc_step: false
+qc_and_merge_step: true
+taxonomic_inventory: true
+cgc_step: true
 reads_functional_annotation: true
-assemble: false
+assemble: true
 
 # Global
-threads: 32
+threads: 80
 
 # As a rule of thumb keep that as floor(threads/8) where threads the previous parameter
-interproscan_threads: 5
+interproscan_threads: 10
 
 # fastp parameters
 detect_adapter_for_pe: false
@@ -80,7 +80,6 @@ maskfile: {
 # Give the number of the sequences included in the predicted_faa_from_previous_run file 
 # You may get this by running:
 # grep -c ">" <*..merged_CDS.faa>
-#count_faa_from_previous_run:22729119
 count_faa_from_previous_run:
 
 # Mandatory for the functional annotation step

@@ -281,8 +281,7 @@ cd ${CWD}
 #echo "metaGOflow has been completed."
 
 # Run the metaGOflow workflow using cwltool
-cwltool --parallel ${SINGULARITY} --outdir ${OUT_DIR_FINAL} ${CWL} ${EXTENDED_CONFIG_YAML}
-date
+cwl-runner --parallel ${SINGULARITY} --outdir ${OUT_DIR_FINAL} ${CWL} ${EXTENDED_CONFIG_YAML}
 # --------------------------------------------
 
 # Edit output structure 
