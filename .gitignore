@@ -130,3 +130,6 @@ slurm_run.sh
 
 #Cymon
 *.swp
+slurm_run.sh
+err
+log

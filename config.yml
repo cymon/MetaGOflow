@@ -14,7 +14,7 @@ interproscan_threads: 5
 # fastp parameters
 detect_adapter_for_pe: false
 overrepresentation_analysis: false
-min_length_required: 108
+min_length_required: 140
 force_polyg_tail_trimming: 
 base_correction: false
 qualified_phred_quality: 
@@ -26,7 +26,7 @@ correction: false
 
 # Assembly
 memory: 0.9
-min-contig-len: 500
+min-contig-len: 200 #MetaGOflow v1.0 default
 
 # Combined Gene Caller // the size is in MB
 cgc_chunk_size: 200
@@ -35,7 +35,7 @@ cgc_chunk_size: 200
 # diamond_maxTargetSeqs: 1
 
 # Functional annotation
-protein_chunk_size_IPS: 1000000 # 20000000
+protein_chunk_size_IPS: 4000000 # 20000000
 protein_chunk_size_eggnog: 4000000
 protein_chunk_size_hmm: 4000000
 
@@ -60,34 +60,34 @@ protein_chunk_size_hmm: 4000000
 processed_reads: {
   class: File, 
   format: "edam:format_1929",
-  path:  results/ERR599171.merged.fasta
+  path: workflows/pseudo_files/pseudo.merged.fasta
 }
 
 # Mandatory for running the taxonomy inventory step
 input_for_motus: {
   class: File, 
-  path:  workflows/pseudo_files/pseudo.merged.unfiltered.fasta
+  path: workflows/pseudo_files/pseudo.merged.unfiltered.fasta
 }
-
 
 # Mandatory for running the functional annotation steps
 # If produced previously from metaGOflow, will have a suffix like: .cmsearch.all.tblout.deoverlapped 
 maskfile: {
   class: File, 
-  path:  results/ERR599171.merged.cmsearch.all.tblout.deoverlapped
+  path:  workflows/pseudo_files/pseudo.merged.cmsearch.all.tblout.deoverlapped
 }
 
 # Mandatory for the functional annotation step 
 # Give the number of the sequences included in the predicted_faa_from_previous_run file 
 # You may get this by running:
 # grep -c ">" <*..merged_CDS.faa>
-count_faa_from_previous_run: 18934897
+#count_faa_from_previous_run:22729119
+count_faa_from_previous_run:
 
 # Mandatory for the functional annotation step
 predicted_faa_from_previous_run: {
   class: File, 
   format: "edam:format_1929",
-  path:  results/ERR599171.merged_CDS.faa
+  path:  workflows/pseudo_files/pseudo.merged_CDS.faa
 }
 
 # Mandatory for running the assembly step 

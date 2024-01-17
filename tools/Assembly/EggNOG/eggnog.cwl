@@ -100,15 +100,6 @@ inputs:
       position: 11
       prefix: -o
 
-#Quieten the output:
-arguments:
-  - valueFrom: '> /dev/null'
-    shellQuote: false
-    position: 12
-  - valueFrom: '2> /dev/null'
-    shellQuote: false
-    position: 13
-
 outputs:
 
   output_annotations:

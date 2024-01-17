@@ -1,22 +1,15 @@
 #!/bin/bash
 
-#SBATCH --partition=fat
 #SBATCH --nodes=1
-#SBATCH --nodelist=
 #SBATCH --ntasks-per-node=40
-#SBATCH --mem=
-#SBATCH --mail-user=haris.zafr@gmail.com
-#SBATCH --mail-type=ALL
-#SBATCH --requeue
-#SBATCH --job-name="tara4IPS"
-#SBATCH --output=tara4cpusIPS.output
-
-# Deactivate conda if already there
-conda deactivate
+#SBATCH --partition=hpc
+#SBATCH --job-name="mgof14"
+#SBATCH --output=log
+#SBATCH --error=err
 
 # Load module
-module load python/3.7.8
-module load singularity/3.7.1 
+#module load python/3.7.8
+#module load singularity/3.7.1 
 
 
 # Run the wf with mini dataset
@@ -32,10 +25,12 @@ module load singularity/3.7.1
 # column water
 # ./run_wf.sh -f test_input/DBB_AABVOSDA_1_1_HMNJKDSX3.UDI256_clean.fastq.gz -r test_input/DBB_AABVOSDA_1_2_HMNJKDSX3.UDI256_clean.fastq.gz -n DBB_dataset -d water_column_dbb -s
 
-# To run an ENA run
-./run_wf.sh -e ERR599171 -d TARA_OCEANS_SAMPLE -n ERR599171 -s -b
-#./run_wf.sh -f test_input/ERR599171_1.fastq.gz -r test_input/ERR599171_2.fastq.gz -n ERR599171  -d TARA_OCEANS_SAMPLE_3steps -s
-
-
-# Disable the module
-module purge
+eval "$(conda shell.bash hook)"
+conda activate metagoflow
+export DATA_FORWARD="DBH_AAAEOSDA_4_1_HMNJKDSX3.UDI204_clean.fastq.gz"
+export DATA_REVERSE="DBH_AAAEOSDA_4_2_HMNJKDSX3.UDI204_clean.fastq.gz"
+date
+./run_wf.sh -s -b -n run -d UDI204-testing-new \
+-f input_data/${DATA_FORWARD} \
+-r input_data/${DATA_REVERSE}
+date

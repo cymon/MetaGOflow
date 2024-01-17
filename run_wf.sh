@@ -259,7 +259,7 @@ cd ${CWD}
 #  echo "Keep temporary output directory."
 #  mv ${CWD}/tmp ${TMPDIR}
 #fi
-
-echo "metaGOflow has been completed."
+#
+#echo "metaGOflow has been completed."
 
 
