@@ -1,12 +1,12 @@
 # Steps to go for
-qc_and_merge_step: true
-taxonomic_inventory: true
-cgc_step: true
+qc_and_merge_step: false
+taxonomic_inventory: false
+cgc_step: false
 reads_functional_annotation: true
-assemble: true
+assemble: false
 
 # Global
-threads: 40
+threads: 32
 
 # As a rule of thumb keep that as floor(threads/8) where threads the previous parameter
 interproscan_threads: 5
@@ -35,9 +35,9 @@ cgc_chunk_size: 200
 # diamond_maxTargetSeqs: 1
 
 # Functional annotation
-protein_chunk_size_IPS: 4000000 # 20000000
+protein_chunk_size_IPS:    4000000
 protein_chunk_size_eggnog: 4000000
-protein_chunk_size_hmm: 4000000
+protein_chunk_size_hmm:    4000000
 
 # -----------------
 # Run wf partially

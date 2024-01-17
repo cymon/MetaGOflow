@@ -153,7 +153,7 @@ then
   ena_api_password: ${ENA_PASSWORD}
   " > get_raw_data_run-test.yml
 
-  cwl-runner ${SINGULARITY} --outdir ${OUT_DIR} --debug get_raw_data_run.cwl get_raw_data_run-test.yml
+  cwl-tool ${SINGULARITY} --outdir ${OUT_DIR} --debug get_raw_data_run.cwl get_raw_data_run-test.yml
  
   rm get_raw_data_run.cwl
   rm get_raw_data_run-test.yml
@@ -260,6 +260,6 @@ cd ${CWD}
 #  mv ${CWD}/tmp ${TMPDIR}
 #fi
 #
-#echo "metaGOflow has been completed."
+echo "metaGOflow has been completed."
 
 

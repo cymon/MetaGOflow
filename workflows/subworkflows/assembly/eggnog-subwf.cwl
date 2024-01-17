@@ -36,6 +36,7 @@ steps:
       no_file_comments: {default: true}
       total_cpus: cpu
       cpu:
+        #can't use inputFiles here: has to be workflow:inputs fasta_file array 
         source: inputFiles
         valueFrom: $(Math.floor(inputs.total_cpus / self.length))
       output: file_acc
