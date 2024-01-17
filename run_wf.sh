@@ -191,7 +191,7 @@ cp config.yml ${RUN_DIR}/
 
 # Run the metaGOflow workflow using cwl-runner (could use instead cwltool)  
 echo "metaGOflow is ready to go!"
-cwltool --parallel ${SINGULARITY} --outdir ${OUT_DIR_FINAL} ${CWL} ${EXTENDED_CONFIG_YAML}
+cwl-runner --parallel ${SINGULARITY} --outdir ${OUT_DIR_FINAL} ${CWL} ${EXTENDED_CONFIG_YAML}
 
 
 # -----------------------  edit output structure   --------------------------- #
