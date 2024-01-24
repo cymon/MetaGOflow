@@ -1,12 +1,12 @@
 # Steps to go for
-qc_and_merge_step: false
-taxonomic_inventory: false
-cgc_step: false
+qc_and_merge_step: true
+taxonomic_inventory: true
+cgc_step: true
 reads_functional_annotation: true
-assemble: false
+assemble: true
 
 # Global
-threads: 32
+threads: 40
 
 # As a rule of thumb keep that as floor(threads/8) where threads the previous parameter
 interproscan_threads: 5
@@ -25,7 +25,7 @@ cut_right: false
 correction: false
 
 # Assembly
-memory: 0.9
+memory: 500
 min-contig-len: 200 #MetaGOflow v1.0 default
 
 # Combined Gene Caller // the size is in MB
